@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>DHT Readings</title>
+	<style type="text/css">
+		body{
+			background-color: #F5F5F5;
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+
+		
+		header {
+            background-color: #4285f4;
+            padding: 20px;
+            color: #fff;
+			display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+		h1 {
+            margin: 0;
+        }
+
+		a {
+            text-decoration: none;
+        }
+
+		.data-container{
+			display: flex;
+			justify-content: space-between;
+			width: 50%;
+			margin: 50px auto;
+			padding: 20px;
+			background-color: #FFF;
+			box-shadow: 0 2px 20px rgba(0, 0, 0,0.1);
+			border-radius: 10px;
+		}
+
+		.data-item{
+			text-align: center;
+		}
+
+		.data-item h2{
+			font-size: 24px;
+			font-weight: bold;
+			margin-bottom: 10px;
+		}
+
+		.data-item p{
+			font-size: 48px;
+			font-weight: bold;
+			color: #6EB7FF;
+		}
+
+		.data-head{
+			margin: auto;
+			width: 50%;
+			text-align: center;
+			font-size: 45px;
+			font-weight: bold;
+			margin: 50px auto;
+			padding: 20px;
+			background-color: #FFF;
+			box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+			border-radius: 20px;
+
+		}
+
+	</style>
+</head>
+<body>
+	<header>
+        <a href="SmartCity.html"><h1>Smart City Project</h1></a>
+    </header>
+
+	<div class="data-head">DHT Sensor Realtime Readings</div>
+
+	<div class="data-container">
+		<div class="data-item">
+			<h2>Temperature</h2>
+			<p class="value" id="temperature"></p>
+		</div>
+		<div class="data-item">
+			<h2>Humidity</h2>
+			<p class="value" id="humidity"></p>
+		</div>
+		
+	</div>
+
+	<!-- the scripts for products you want to access must be added-->
+
+	<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+
+	<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+	<script type="module">
+	  // Import the functions you need from the SDKs you need
+	  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-app.js";
+	  // TODO: Add SDKs for Firebase products that you want to use
+	  // https://firebase.google.com/docs/web/setup#available-libraries
+
+	  // Your web app's Firebase configuration here (Do not use the existing configuration)
+            const firebaseConfig = {
+        apiKey: "AIzaSyDNCE4n8TS8TCwrl7J4hsS0zEIVYCiWFv8",
+        authDomain: "temperature-42a0f.firebaseapp.com",
+        databaseURL: "https://temperature-42a0f-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "temperature-42a0f",
+        storageBucket: "temperature-42a0f.appspot.com",
+        messagingSenderId: "724480001329",
+        appId: "1:724480001329:web:864e6baa402ca6ba355c10"
+        };
+
+	  // Initialize Firebase
+	  firebase.initializeApp(firebaseConfig);
+
+
+	  // getting reference to the database
+	  var database = firebase.database();
+
+	  //getting reference to the data we want
+	  var dataRef1 = database.ref('DHT_11/Humidity');
+	  var dataRef2 = database.ref('DHT_11/Temperature');
+
+	  //fetch the data
+	  dataRef1.on('value', function(getdata1){
+	  	var humi = getdata1.val();
+	  	document.getElementById('humidity').innerHTML = humi + "%";
+	  })
+
+	   dataRef2.on('value', function(getdata2){
+	  	var temp = getdata2.val();
+	  	document.getElementById('temperature').innerHTML = temp + "&#8451;";
+	  })
+
+	</script>
+
+</body>
+</html>
